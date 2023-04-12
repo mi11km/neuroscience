@@ -1,7 +1,7 @@
 #include <stdio.h>
 #include <math.h>
-
 #include "pkg/numerical_calculation/ordinary_differential_equation.h"
+
 
 double f(double x, double t) {
     // ex. dx/dt = x
