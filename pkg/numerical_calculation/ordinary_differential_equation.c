@@ -6,7 +6,7 @@
  */
 double f(double x, double t) {
     // ex. dx/dt = x
-    return x;
+    return x;  // TODO 可変にする（今だと dx/dt = x 固定になっている）
 }
 
 void validate_args(double t0, double t) {

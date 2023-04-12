@@ -4,7 +4,12 @@
 #include "pkg/numerical_calculation/ordinary_differential_equation.h"
 
 
-int main() {
+int main(void) {
+    /*
+     * 以下の1階常微分方程式の数値計算
+     *   dx/dt = f(x, t)
+     *   x(t0) = x0
+     */
     const double t0 = 0.0;  // 初期値 t = 0.0
     const double x0 = 1.0;  // 初期値 x(t0) = 1.0
     const double t = 1.0;   // 求める数値 t = 1.0 のときの x(t)
