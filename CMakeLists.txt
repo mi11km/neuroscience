@@ -3,4 +3,9 @@ project(neuroscience C)
 
 set(CMAKE_C_STANDARD 11)
 
-add_executable(neuroscience main.c)
+add_executable(
+        neuroscience
+        main.c
+        pkg/numerical_calculation/ordinary_differential_equation.h
+        pkg/numerical_calculation/ordinary_differential_equation.c
+)
