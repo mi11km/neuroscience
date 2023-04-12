@@ -1,13 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include "ordinary_differential_equation.h"
 
-/*
- * f is used as dx/dt = f(x, t) in the following methods for resoling ordinary differential equation
- */
-double f(double x, double t) {
-    // ex. dx/dt = x
-    return x;  // TODO 可変にする（今だと dx/dt = x 固定になっている）
-}
 
 void validate_args(double t0, double t) {
     if (t0 > t) {
@@ -17,48 +11,51 @@ void validate_args(double t0, double t) {
 }
 
 /*
- * euler_method returns x(t) value resolving dx/dt = f(x, t), whose initial condition is x(t0) = x0
+ * euler_method returns x(p->t) value resolving dx/dt = p->f(x, t)
+ * the initial condition is x(p->t0) = p->x0
  * */
-double euler_method(double t0, double x0, double delta_t, double t) {
-    validate_args(t0, t);
-    double tt = t0, x = x0;
-    while (tt < t) {
-        x += delta_t * f(x, tt);
-        tt += delta_t;
+double euler_method(ODE_params *p) {
+    validate_args(p->t0, p->t);
+    double t = p->t0, x = p->x0;
+    while (t < p->t) {
+        x += p->delta_t * p->f(x, t);
+        t += p->delta_t;
     }
     return x;
 }
 
 /*
- * heun_method returns x(t) value resolving dx/dt = f(x, t), whose initial condition is x(t0) = x0
+ * heun_method returns x(p->t) value resolving dx/dt = p->f(x, t)
+ * the initial condition is x(p->t0) = p->x0
  * */
-double heun_method(double t0, double x0, double delta_t, double t) {
-    validate_args(t0, t);
-    double tt = t0, x = x0;
+double heun_method(ODE_params *p) {
+    validate_args(p->t0, p->t);
+    double t = p->t0, x = p->x0;
     double k1, k2;
-    while (tt < t) {
-        k1 = delta_t * f(x, t);
-        k2 = delta_t * f(x + k1, t + delta_t);
+    while (t < p->t) {
+        k1 = p->delta_t * p->f(x, p->t);
+        k2 = p->delta_t * p->f(x + k1, p->t + p->delta_t);
         x += (k1 + k2) / 2.0;
-        tt += delta_t;
+        t += p->delta_t;
     }
     return x;
 }
 
 /*
- * runge_kutta_method returns x(t) value resolving dx/dt = f(x, t), whose initial condition is x(t0) = x0
+ * runge_kutta_method returns x(p->t) value resolving dx/dt = p->f(x, p->t)
+ * the initial condition is x(p->t0) = p->x0
  * */
-double runge_kutta_method(double t0, double x0, double delta_t, double t) {
-    validate_args(t0, t);
-    double tt = t0, x = x0;
+double runge_kutta_method(ODE_params *p) {
+    validate_args(p->t0, p->t);
+    double t = p->t0, x = p->x0;
     double k1, k2, k3, k4;
-    while (tt < t) {
-        k1 = delta_t * f(x, t);
-        k2 = delta_t * f(x + k1 / 2.0, t + delta_t / 2.0);
-        k3 = delta_t * f(x + k2 / 2.0, t + delta_t / 2.0);
-        k4 = delta_t * f(x + k3, t + delta_t);
+    while (t < p->t) {
+        k1 = p->delta_t * p->f(x, p->t);
+        k2 = p->delta_t * p->f(x + k1 / 2.0, p->t + p->delta_t / 2.0);
+        k3 = p->delta_t * p->f(x + k2 / 2.0, p->t + p->delta_t / 2.0);
+        k4 = p->delta_t * p->f(x + k3, p->t + p->delta_t);
         x += (k1 + 2.0 * k2 + 2.0 * k3 + k4) / 6.0;
-        tt += delta_t;
+        t += p->delta_t;
     }
     return x;
 }
