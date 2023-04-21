@@ -8,4 +8,6 @@ add_executable(
         main.c
         pkg/numerical_calculation/ordinary_differential_equation.h
         pkg/numerical_calculation/ordinary_differential_equation.c
+        pkg/neuron_model/hodgkin_huxley.c
+        pkg/neuron_model/hodgkin_huxley.h
 )

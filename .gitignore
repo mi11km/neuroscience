@@ -41,7 +41,8 @@
 *.su
 *.idb
 *.pdb
-cmake-build-debug/
+build/
+dist/*.dat
 
 # Kernel Module Compile Results
 *.mod*
